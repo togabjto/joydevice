@@ -1,0 +1,266 @@
+:root {
+  --bg: #16181d;
+  --panel: #1e2128;
+  --joycon-blue: #4e6ee8;
+  --joycon-blue-dark: #3a53bd;
+  --btn: #12141a;
+  --btn-border: #2c2f38;
+  --text: #e8eaf0;
+  --text-dim: #9aa0ad;
+  --accent: #ffce45;
+  --danger: #e85a5a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.page-header {
+  padding: 24px 32px 8px;
+  text-align: center;
+}
+
+.page-header h1 { margin: 0 0 4px; font-size: 1.5rem; }
+.subtitle { margin: 0; color: var(--text-dim); font-size: 0.9rem; }
+
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center;
+  padding: 24px 32px 64px;
+}
+
+.panel {
+  background: var(--panel);
+  border-radius: 16px;
+  padding: 24px;
+  min-width: 300px;
+}
+
+.panel h2 { margin-top: 0; font-size: 1.1rem; }
+
+/* ---- Joy-Con visual ---- */
+.joycon-body {
+  position: relative;
+  width: 260px;
+  height: 540px;
+  margin: 16px auto 0;
+  background: linear-gradient(180deg, var(--joycon-blue), var(--joycon-blue-dark));
+  border-radius: 90px 90px 40px 40px;
+  box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.08);
+}
+
+.jc-btn {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: var(--btn);
+  color: var(--text);
+  border: 2px solid var(--btn-border);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.7rem;
+  padding: 4px;
+  transition: transform 0.1s ease, border-color 0.15s ease;
+}
+
+.jc-btn:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+.jc-btn-name { font-weight: 600; letter-spacing: 0.05em; }
+
+.jc-assigned {
+  display: block;
+  font-size: 0.6rem;
+  color: var(--accent);
+  max-width: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.jc-zl {
+  top: 14px; left: 50%; transform: translateX(-50%);
+  width: 160px; height: 30px; border-radius: 16px 16px 4px 4px;
+}
+.jc-l {
+  top: 50px; left: 50%; transform: translateX(-50%);
+  width: 140px; height: 26px; border-radius: 10px;
+}
+.jc-minus {
+  top: 92px; right: 26px;
+  width: 44px; height: 30px; border-radius: 50%;
+}
+
+.jc-stick {
+  top: 150px; left: 50%; transform: translateX(-50%);
+  width: 90px; height: 90px; border-radius: 50%;
+  border-width: 4px;
+}
+.jc-stick:hover { transform: translateX(-50%) translateY(-1px); }
+
+.jc-dpad {
+  position: absolute;
+  top: 270px; left: 50%; transform: translateX(-50%);
+  width: 150px; height: 150px;
+}
+.jc-dpad .jc-btn {
+  width: 48px; height: 48px; border-radius: 10px;
+}
+.jc-dpad-up    { top: 0;    left: 51px; }
+.jc-dpad-left  { top: 51px; left: 0; }
+.jc-dpad-right { top: 51px; left: 102px; }
+.jc-dpad-down  { top: 102px; left: 51px; }
+
+.jc-capture {
+  top: 445px; left: 50%; transform: translateX(-50%);
+  width: 64px; height: 56px; border-radius: 12px;
+}
+
+/* ---- Oshi-ring compass ---- */
+.ring-desc { color: var(--text-dim); font-size: 0.85rem; margin-top: 0; }
+
+.ring-compass {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  margin: 24px auto;
+}
+
+.ring-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: var(--btn);
+  border: 2px dashed var(--btn-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.ring-btn {
+  position: absolute;
+  width: 78px; height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: var(--btn);
+  color: var(--text);
+  border: 2px solid var(--btn-border);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.7rem;
+  transform: translate(-50%, -50%);
+}
+.ring-btn:hover { border-color: var(--accent); }
+
+.ring-label { font-weight: 600; }
+
+.ring-up         { top: 0%;   left: 50%; }
+.ring-up_right   { top: 15%;  left: 85%; }
+.ring-right      { top: 50%;  left: 100%; }
+.ring-down_right { top: 85%;  left: 85%; }
+.ring-down       { top: 100%; left: 50%; }
+.ring-down_left  { top: 85%;  left: 15%; }
+.ring-left       { top: 50%;  left: 0%; }
+.ring-up_left    { top: 15%;  left: 15%; }
+
+/* ---- Modal ---- */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10;
+}
+
+.modal-overlay[hidden] {
+  display: none;
+}
+
+.modal {
+  background: var(--panel);
+  border-radius: 14px;
+  padding: 24px;
+  width: 340px;
+  max-width: 90vw;
+}
+
+.modal h3 { margin-top: 0; }
+
+.field { display: block; margin-bottom: 16px; }
+.field span { display: block; font-size: 0.8rem; color: var(--text-dim); margin-bottom: 6px; }
+
+.field input[type="text"],
+.field textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--btn-border);
+  background: var(--btn);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.key-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 30px;
+  margin-bottom: 8px;
+}
+
+.key-chip {
+  background: var(--joycon-blue);
+  color: white;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+}
+
+.record-hint { font-size: 0.75rem; color: var(--text-dim); }
+
+.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.btn-record { background: var(--accent); color: #1a1a1a; font-weight: 600; }
+.btn-record.recording { background: var(--danger); color: white; }
+.btn-secondary { background: var(--btn); color: var(--text); border: 1px solid var(--btn-border); }
+.btn-primary { background: var(--joycon-blue); color: white; font-weight: 600; }
+
+.modal-actions { display: flex; justify-content: flex-end; margin-top: 20px; }
+
+.toast {
+  position: fixed;
+  top: 16px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--joycon-blue);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  z-index: 20;
+}
+.toast.error { background: var(--danger); }

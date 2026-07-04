@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joy-Con(L) 左手デバイス設定</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="page-header">
+    <h1>Joy-Con(L) 左手デバイス設定</h1>
+    <p class="subtitle">各ボタン・オキニリングをクリックしてショートカットを割り当ててください</p>
+    <div id="toast" class="toast" hidden></div>
+  </header>
+
+  <main class="layout">
+    <section class="panel joycon-panel">
+      <h2>ボタン割り当て</h2>
+      <div class="joycon-body">
+        <button class="jc-btn jc-zl" data-section="buttons" data-slot="ZL" title="ZL（ホールド中はオキニリングとして動作）">
+          <span class="jc-btn-name">ZL</span>
+          <span class="jc-assigned" data-target="buttons:ZL"></span>
+        </button>
+        <button class="jc-btn jc-l" data-section="buttons" data-slot="L" title="L">
+          <span class="jc-btn-name">L</span>
+          <span class="jc-assigned" data-target="buttons:L"></span>
+        </button>
+        <button class="jc-btn jc-minus" data-section="buttons" data-slot="minus" title="マイナス">
+          <span class="jc-btn-name">－</span>
+          <span class="jc-assigned" data-target="buttons:minus"></span>
+        </button>
+
+        <button class="jc-btn jc-stick" data-section="buttons" data-slot="stick_press" title="スティック押し込み">
+          <span class="jc-btn-name">STICK</span>
+          <span class="jc-assigned" data-target="buttons:stick_press"></span>
+        </button>
+
+        <div class="jc-dpad">
+          <button class="jc-btn jc-dpad-up" data-section="buttons" data-slot="dpad_up" title="十字キー上">
+            <span class="jc-btn-name">▲</span>
+            <span class="jc-assigned" data-target="buttons:dpad_up"></span>
+          </button>
+          <button class="jc-btn jc-dpad-left" data-section="buttons" data-slot="dpad_left" title="十字キー左">
+            <span class="jc-btn-name">◀</span>
+            <span class="jc-assigned" data-target="buttons:dpad_left"></span>
+          </button>
+          <button class="jc-btn jc-dpad-right" data-section="buttons" data-slot="dpad_right" title="十字キー右">
+            <span class="jc-btn-name">▶</span>
+            <span class="jc-assigned" data-target="buttons:dpad_right"></span>
+          </button>
+          <button class="jc-btn jc-dpad-down" data-section="buttons" data-slot="dpad_down" title="十字キー下">
+            <span class="jc-btn-name">▼</span>
+            <span class="jc-assigned" data-target="buttons:dpad_down"></span>
+          </button>
+        </div>
+
+        <button class="jc-btn jc-capture" data-section="buttons" data-slot="capture" title="キャプチャ">
+          <span class="jc-btn-name">CAPTURE</span>
+          <span class="jc-assigned" data-target="buttons:capture"></span>
+        </button>
+      </div>
+    </section>
+
+    <section class="panel ring-panel">
+      <h2>オキニリング設定</h2>
+      <p class="ring-desc">ZLをホールドしながらスティックを倒した方向に、独立したショートカットを割り当てます。</p>
+      <div class="ring-compass">
+        <div class="ring-center">ZL<br>ホールド</div>
+        <button class="ring-btn ring-up"         data-section="oshi_ring" data-slot="up"><span class="ring-label">上</span><span class="jc-assigned" data-target="oshi_ring:up"></span></button>
+        <button class="ring-btn ring-up_right"   data-section="oshi_ring" data-slot="up_right"><span class="ring-label">右上</span><span class="jc-assigned" data-target="oshi_ring:up_right"></span></button>
+        <button class="ring-btn ring-right"      data-section="oshi_ring" data-slot="right"><span class="ring-label">右</span><span class="jc-assigned" data-target="oshi_ring:right"></span></button>
+        <button class="ring-btn ring-down_right" data-section="oshi_ring" data-slot="down_right"><span class="ring-label">右下</span><span class="jc-assigned" data-target="oshi_ring:down_right"></span></button>
+        <button class="ring-btn ring-down"       data-section="oshi_ring" data-slot="down"><span class="ring-label">下</span><span class="jc-assigned" data-target="oshi_ring:down"></span></button>
+        <button class="ring-btn ring-down_left"  data-section="oshi_ring" data-slot="down_left"><span class="ring-label">左下</span><span class="jc-assigned" data-target="oshi_ring:down_left"></span></button>
+        <button class="ring-btn ring-left"       data-section="oshi_ring" data-slot="left"><span class="ring-label">左</span><span class="jc-assigned" data-target="oshi_ring:left"></span></button>
+        <button class="ring-btn ring-up_left"    data-section="oshi_ring" data-slot="up_left"><span class="ring-label">左上</span><span class="jc-assigned" data-target="oshi_ring:up_left"></span></button>
+      </div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal-overlay" hidden>
+    <div class="modal">
+      <h3 id="modal-title">設定</h3>
+      <label class="field">
+        <span>ラベル（メモ）</span>
+        <input type="text" id="modal-label" maxlength="100" placeholder="例: コピー">
+      </label>
+      <div class="field">
+        <span>割り当てキー</span>
+        <div id="modal-keys" class="key-chips"></div>
+        <button id="record-btn" class="btn btn-record" type="button">キーを記録</button>
+        <button id="clear-keys-btn" class="btn btn-secondary" type="button">クリア</button>
+        <p id="record-hint" class="record-hint" hidden>キーボードのキーを押してください（複数同時押し可）。終わったら「記録終了」を押してください。</p>
+      </div>
+      <label class="field">
+        <span>貼り付けテキスト（入力すると上のキーより優先されます）</span>
+        <textarea id="modal-text" rows="3" maxlength="2000" placeholder="例: よろしくお願いします"></textarea>
+      </label>
+      <div class="modal-actions">
+        <button id="save-btn" class="btn btn-primary" type="button">保存</button>
+        <button id="cancel-btn" class="btn btn-secondary" type="button">キャンセル</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

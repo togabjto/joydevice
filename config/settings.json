@@ -1,0 +1,130 @@
+{
+  "buttons": {
+    "L": {
+      "label": "コピー",
+      "keys": [
+        "ctrl",
+        "c"
+      ],
+      "text": ""
+    },
+    "ZL": {
+      "label": "ペースト",
+      "keys": [
+        "ctrl",
+        "v"
+      ],
+      "text": ""
+    },
+    "minus": {
+      "label": "デスクトップ表示",
+      "keys": [
+        "cmd",
+        "d"
+      ],
+      "text": ""
+    },
+    "capture": {
+      "label": "スクリーンショット",
+      "keys": [
+        "cmd",
+        "shift",
+        "3"
+      ],
+      "text": ""
+    },
+    "stick_press": {
+      "label": "",
+      "keys": [
+        "q",
+        "w",
+        "e",
+        "r",
+        "t"
+      ],
+      "text": ""
+    },
+    "dpad_up": {
+      "label": "音量アップ",
+      "keys": [
+        "a"
+      ],
+      "text": ""
+    },
+    "dpad_down": {
+      "label": "音量ダウン",
+      "keys": [
+        "cmd",
+        "c"
+      ],
+      "text": ""
+    },
+    "dpad_left": {
+      "label": "前のトラック",
+      "keys": [
+        "cmd",
+        "shift",
+        ";"
+      ],
+      "text": ""
+    },
+    "dpad_right": {
+      "label": "次のトラック",
+      "keys": [
+        "cmd",
+        "v"
+      ],
+      "text": ""
+    }
+  },
+  "oshi_ring": {
+    "up": {
+      "label": "上スマ",
+      "keys": [],
+      "text": "上スマッシュ！！！"
+    },
+    "up_right": {
+      "label": "",
+      "keys": [],
+      "text": ""
+    },
+    "right": {
+      "label": "",
+      "keys": [],
+      "text": ""
+    },
+    "down_right": {
+      "label": "",
+      "keys": [],
+      "text": ""
+    },
+    "down": {
+      "label": "",
+      "keys": [
+        "s",
+        "i",
+        "t",
+        "a"
+      ],
+      "text": ""
+    },
+    "down_left": {
+      "label": "",
+      "keys": [],
+      "text": ""
+    },
+    "left": {
+      "label": "",
+      "keys": [
+        "cmd",
+        "c"
+      ],
+      "text": ""
+    },
+    "up_left": {
+      "label": "",
+      "keys": [],
+      "text": ""
+    }
+  }
+}
