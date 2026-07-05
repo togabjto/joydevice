@@ -29,17 +29,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import pygame
 
-from bridge.rumble_patterns import RUMBLE_PATTERNS, SOCKET_PATH
+from bridge.rumble_patterns import DAEMON_CONNECT_TIMEOUT_S, RUMBLE_PATTERNS, SOCKET_PATH
 from core.config_manager import load_joycon_map
 
 # hookが実際に発火し、振動処理が最後まで走ったかを物理的な感覚に頼らず追跡するための
 # デバッグログ。振動が「感じられない」原因がhook配線側かハードウェア側かを切り分けるために使う。
 LOG_PATH = Path(__file__).resolve().parent / "notify.log"
 DAEMON_SCRIPT = Path(__file__).resolve().parent / "rumble_daemon.py"
-# 接続確立はデーモンが起動しているかどうかの判定なので短く諦める。応答待ちは
-# 振動パターンの再生時間(最長でも1秒未満)より長く取り、実行中に取りこぼして
+# 応答待ちは振動パターンの再生時間(最長でも1秒未満)より長く取り、実行中に取りこぼして
 # フォールバックと二重に振動しないようにする。
-DAEMON_CONNECT_TIMEOUT_S = 0.3
 DAEMON_RESPONSE_TIMEOUT_S = 2.0
 
 

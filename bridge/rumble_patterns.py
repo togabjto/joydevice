@@ -6,8 +6,12 @@ from __future__ import annotations
 
 from pathlib import Path
 
-# rumble.py が常駐デーモンへ高速パスで接続する際に使うUnixドメインソケットのパス。
+# rumble.py/notify_hook.py が常駐デーモンへ高速パスで接続する際に使うUnixドメインソケットのパス。
 SOCKET_PATH = Path.home() / ".joycon_rumble.sock"
+
+# デーモンへの接続確立に使うタイムアウト(秒)。デーモンが起動しているかどうかの
+# 判定に使うだけなので短く諦める。
+DAEMON_CONNECT_TIMEOUT_S = 0.3
 
 # パターン名 -> [(low_freq, high_freq, duration_ms, パルス後の無音秒数), ...]
 RUMBLE_PATTERNS: dict[str, list[tuple[float, float, int, float]]] = {

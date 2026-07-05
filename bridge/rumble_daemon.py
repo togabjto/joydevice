@@ -12,6 +12,7 @@ Bluetooth経由で探索し直す必要があり、これだけで0.5〜0.8秒�
 """
 from __future__ import annotations
 
+import fcntl
 import os
 import socket
 import sys
@@ -28,6 +29,10 @@ from bridge.rumble_patterns import RUMBLE_PATTERNS, SOCKET_PATH
 from core.config_manager import load_joycon_map
 
 LOG_PATH = Path(__file__).resolve().parent / "notify.log"
+# 起動しているデーモンを1つに限定するためのロックファイル。notify_hook.py/rumble.py は
+# デーモンが応答しないたびに再起動を試みるため、ロック無しだと古いデーモンがソケットの
+# パスだけ奪われて誰にも繋がらないまま生き残る「ゾンビ」が積み重なってしまう。
+LOCK_PATH = Path.home() / ".joycon_rumble.lock"
 
 
 def _log(message: str) -> None:
@@ -56,6 +61,13 @@ def _reconnect(hw_map: dict) -> pygame.joystick.JoystickType | None:
     return _find_joystick(hw_map.get("device_name_hint", ""))
 
 
+def _send_best_effort(conn: socket.socket, payload: bytes) -> None:
+    try:
+        conn.sendall(payload)
+    except OSError:
+        pass
+
+
 def _pulse(joystick: pygame.joystick.JoystickType, pattern_name: str) -> bool:
     pulses = RUMBLE_PATTERNS.get(pattern_name, RUMBLE_PATTERNS["default"])
     ok = True
@@ -67,7 +79,24 @@ def _pulse(joystick: pygame.joystick.JoystickType, pattern_name: str) -> bool:
     return ok
 
 
+def _acquire_singleton_lock():
+    """他に起動中のデーモンがいればNoneを返す。戻り値のファイルオブジェクトは
+    プロセスが終了するまで(またはcloseするまで)保持しておくこと(閉じるとロックが外れる)。"""
+    lock_file = open(LOCK_PATH, "w")
+    try:
+        fcntl.flock(lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError:
+        lock_file.close()
+        return None
+    return lock_file
+
+
 def main() -> None:
+    lock_file = _acquire_singleton_lock()
+    if lock_file is None:
+        _log(f"daemon pid={os.getpid()} already_running exit")
+        return
+
     hw_map = load_joycon_map()
     pygame.joystick.init()
     joystick = _find_joystick(hw_map.get("device_name_hint", ""))
@@ -90,7 +119,7 @@ def main() -> None:
                     joystick = _reconnect(hw_map)
                 if joystick is None:
                     _log(f"daemon pattern={pattern_name} joystick_not_found")
-                    conn.sendall(b"joystick_not_found")
+                    _send_best_effort(conn, b"joystick_not_found")
                     continue
                 _log(f"daemon pattern={pattern_name} start pid={os.getpid()}")
                 try:
@@ -100,7 +129,9 @@ def main() -> None:
                     joystick = None
                     ok = False
                 _log(f"daemon pattern={pattern_name} end ok={ok}")
-                conn.sendall(b"ok" if ok else b"fail")
+                # notify_hook.py は応答を待たずに投げっぱなしにするため、相手が既に
+                # ソケットを閉じてBrokenPipeErrorになってもデーモン自体は落とさない。
+                _send_best_effort(conn, b"ok" if ok else b"fail")
     finally:
         server.close()
         if SOCKET_PATH.exists():
