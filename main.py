@@ -15,7 +15,10 @@ from __future__ import annotations
 
 import argparse
 import logging
+import subprocess
+import sys
 import threading
+from pathlib import Path
 
 from core.action_dispatcher import ActionDispatcher
 from core.config_manager import ConfigManager, load_joycon_map
@@ -58,6 +61,15 @@ def main() -> None:
     logging.basicConfig(
         level=logging.DEBUG if args.debug else logging.INFO,
         format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    )
+
+    # 振動用デーモンをバックグラウンド起動（高速パス化のため）
+    daemon_script = Path(__file__).resolve().parent / "bridge" / "rumble_daemon.py"
+    subprocess.Popen(
+        [sys.executable, str(daemon_script)],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        start_new_session=True,
     )
 
     config_manager = ConfigManager()

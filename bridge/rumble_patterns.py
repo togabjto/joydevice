@@ -17,6 +17,8 @@ DAEMON_CONNECT_TIMEOUT_S = 0.3
 RUMBLE_PATTERNS: dict[str, list[tuple[float, float, int, float]]] = {
     "working": [(0.4, 0.4, 80, 0.05)],
     "permission_prompt": [(0.8, 0.8, 400, 0.1)],
+    # 入力待ち(アイドル)。許可待ちの長い一発と区別できるよう軽い3連タップにする。
+    "waiting_input": [(0.5, 0.5, 100, 0.1), (0.5, 0.5, 100, 0.1), (0.5, 0.5, 100, 0.1)],
     "task_done": [(0.8, 0.8, 120, 0.25), (0.8, 0.8, 120, 0.1)],
     "default": [(0.5, 0.5, 250, 0.1)],
 }

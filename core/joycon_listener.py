@@ -16,6 +16,7 @@ config/joycon_map.json のハードウェアマッピングに従って正規化
 from __future__ import annotations
 
 import logging
+import math
 import time
 from collections.abc import Callable
 from typing import Any
@@ -126,9 +127,10 @@ class JoyConListener:
             return
 
         x, y = self._stick_value
-        if abs(x) < self._deadzone_axis_noise:
+        # 各軸を独立して切り捨てると斜め入力(両軸とも小さめ)が失われるため、
+        # 合成の大きさ(magnitude)で判定する。閾値未満のときだけ原点に丸める。
+        if math.hypot(x, y) < self._deadzone_axis_noise:
             x = 0.0
-        if abs(y) < self._deadzone_axis_noise:
             y = 0.0
 
         if (x, y) == self._last_emitted_stick:

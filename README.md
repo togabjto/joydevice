@@ -21,8 +21,11 @@ joydevice/
 │   ├── server.py                # Web UI設定サーバー (Flask)
 │   ├── templates/index.html
 │   └── static/{css,js}/
-└── tools/
-    └── calibrate.py             # 実機のボタン/軸インデックスを調べる対話ツール
+├── tools/
+│   └── calibrate.py             # 実機のボタン/軸インデックスを調べる対話ツール
+└── bridge/
+    ├── rumble.py                 # Joy-Conの振動(ランブル)処理
+    └── notify_hook.py            # Claude Codeのhookから呼ばれるエントリポイント
 ```
 
 ## セットアップ
@@ -73,6 +76,14 @@ python -m web.server
 - `ZL` を押してから一度もスティックを倒さずに離した場合は、`ZL` 単体に割り当てたアクションが実行されます。
 - `ZL` を押している間にいずれかの方向へスティックを倒すと、その方向のアクションが実行されます
   （中央へ戻してから別方向へ倒すと、その方向のアクションも発火します）。
+
+## 4. Claude Codeの状態をJoy-Conの振動で通知する (bridge/)
+
+Claude Codeのhooks機能を使って、作業開始・許可待ち・応答完了のタイミングでJoy-Conを
+振動させる仕組みが `bridge/` にある。設定・検証状況・トラブルシューティングは
+[`bridge/README.md`](bridge/README.md) を参照。
+
+**振動が来ない場合は、[`bridge/DEBUGGING.md`](bridge/DEBUGGING.md) のデバッグガイドを参照してください。**
 
 ## 拡張のしかた
 

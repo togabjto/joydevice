@@ -53,6 +53,9 @@ def main() -> None:
     if _fire_and_forget_to_daemon(pattern_name):
         return
 
+    # デーモンが起動していないので rumble.py を別プロセスで起動。
+    # ここは高速パスに乗らなかった（デーモンが未起動）ということなので、
+    # rumble.py がフォールバック初期化をしてくれる。
     subprocess.Popen(
         [sys.executable, str(RUMBLE_SCRIPT), pattern_name],
         stdout=subprocess.DEVNULL,

@@ -75,13 +75,24 @@ def _try_daemon(pattern_name: str) -> bool | None:
         return None
 
 
-def _spawn_daemon() -> None:
+def _spawn_daemon() -> bool:
+    """デーモンをバックグラウンド起動。起動直後にスレッド内で接続できたら True を返す。"""
     subprocess.Popen(
         [sys.executable, str(DAEMON_SCRIPT)],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
         start_new_session=True,
     )
+    # デーモンが起動してソケットをバインドするまで少し待つ(最長500ms)
+    for _ in range(50):
+        try:
+            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as sock:
+                sock.settimeout(DAEMON_CONNECT_TIMEOUT_S)
+                sock.connect(str(SOCKET_PATH))
+                return True
+        except OSError:
+            time.sleep(0.01)
+    return False
 
 
 def _rumble_standalone(pattern_name: str) -> bool:
@@ -117,7 +128,14 @@ def rumble(pattern_name: str = "default") -> bool:
     _log(f"end pattern={pattern_name} path=fallback ok={ok}")
     # joystickを手放した後でデーモンを起動する(振動処理と同時に別プロセスが
     # 同じJoy-Conを掴もうとする競合を避けるため)。次回以降は高速パスになる。
-    _spawn_daemon()
+    # 複数の rumble.py が同時にデーモン未起動と判定した場合のゾンビプロセス対策として、
+    # デーモン起動後に再度接続を試みて成功したら高速パスに切り替える。
+    daemon_started = _spawn_daemon()
+    if daemon_started:
+        retry_result = _try_daemon(pattern_name)
+        if retry_result is not None and retry_result:
+            _log(f"end pattern={pattern_name} path=daemon_retry ok={retry_result}")
+            return retry_result
     return ok
 
 

@@ -3,7 +3,7 @@
     "L": {
       "label": "コピー",
       "keys": [
-        "ctrl",
+        "cmd",
         "c"
       ],
       "text": ""
@@ -11,7 +11,7 @@
     "ZL": {
       "label": "ペースト",
       "keys": [
-        "ctrl",
+        "cmd",
         "v"
       ],
       "text": ""
@@ -19,8 +19,7 @@
     "minus": {
       "label": "デスクトップ表示",
       "keys": [
-        "cmd",
-        "d"
+        "enter"
       ],
       "text": ""
     },
@@ -36,26 +35,23 @@
     "stick_press": {
       "label": "",
       "keys": [
-        "q",
-        "w",
-        "e",
-        "r",
-        "t"
+        "cmd",
+        "shift",
+        ";"
       ],
       "text": ""
     },
     "dpad_up": {
       "label": "音量アップ",
       "keys": [
-        "a"
+        "up"
       ],
       "text": ""
     },
     "dpad_down": {
       "label": "音量ダウン",
       "keys": [
-        "cmd",
-        "c"
+        "down"
       ],
       "text": ""
     },
@@ -63,8 +59,7 @@
       "label": "前のトラック",
       "keys": [
         "cmd",
-        "shift",
-        ";"
+        "z"
       ],
       "text": ""
     },
@@ -72,7 +67,8 @@
       "label": "次のトラック",
       "keys": [
         "cmd",
-        "v"
+        "shift",
+        "z"
       ],
       "text": ""
     }
@@ -81,22 +77,22 @@
     "up": {
       "label": "上スマ",
       "keys": [],
-      "text": "上スマッシュ！！！"
+      "text": "あいうえおか聞くケオ"
     },
     "up_right": {
       "label": "",
       "keys": [],
-      "text": ""
+      "text": "右上"
     },
     "right": {
       "label": "",
       "keys": [],
-      "text": ""
+      "text": "逆"
     },
     "down_right": {
       "label": "",
       "keys": [],
-      "text": ""
+      "text": "右下"
     },
     "down": {
       "label": "",
@@ -106,25 +102,26 @@
         "t",
         "a"
       ],
-      "text": ""
+      "text": "した"
     },
     "down_left": {
       "label": "",
       "keys": [],
-      "text": ""
+      "text": "左下"
     },
     "left": {
       "label": "",
       "keys": [
         "cmd",
-        "c"
+        "shift",
+        "3"
       ],
       "text": ""
     },
     "up_left": {
       "label": "",
       "keys": [],
-      "text": ""
+      "text": "左上"
     }
   }
 }

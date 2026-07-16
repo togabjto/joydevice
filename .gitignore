@@ -137,3 +137,8 @@ cython_debug/
 # OS metadata
 .DS_Store
 Thumbs.db
+
+# Claude Code local settings (このマシン固有のhook設定など)
+.claude/
+bridge/notify.log
+

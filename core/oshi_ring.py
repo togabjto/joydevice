@@ -28,8 +28,10 @@ def angle_to_direction(x: float, y: float) -> str | None:
     """スティック座標(x: 右+, y: 上+)を8方向名に変換する。原点付近はNoneを返す。"""
     if x == 0 and y == 0:
         return None
-    angle = math.degrees(math.atan2(y, x)) % 360
-    index = round(angle / 45) % 8
+    # このJoy-Con(L)は生のx軸が物理的な左右と逆向きのため-xで補正する。
+    angle = math.degrees(math.atan2(y, -x)) % 360
+    # 各45度の範囲を正確に判定（round()の偶数丸めの問題を回避）
+    index = int((angle + 22.5) / 45) % 8
     return _DIRECTIONS[index]
 
 
