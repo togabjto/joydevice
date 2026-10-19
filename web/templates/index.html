@@ -9,7 +9,7 @@
 <body>
   <header class="page-header">
     <h1>Joy-Con(L) 左手デバイス設定</h1>
-    <p class="subtitle">各ボタン・オキニリングをクリックしてショートカットを割り当ててください</p>
+    <p class="subtitle">各ボタンをクリックしてショートカットを割り当ててください</p>
     <div id="toast" class="toast" hidden></div>
   </header>
 
@@ -25,44 +25,51 @@
           <span class="jc-btn-name">L</span>
           <span class="jc-assigned" data-target="buttons:L"></span>
         </button>
+        <div class="joycon left">
         <button class="jc-btn jc-minus" data-section="buttons" data-slot="minus" title="マイナス">
-          <span class="jc-btn-name">－</span>
+          <span class="jc-btn-name"></span>
           <span class="jc-assigned" data-target="buttons:minus"></span>
         </button>
-
         <button class="jc-btn jc-stick" data-section="buttons" data-slot="stick_press" title="スティック押し込み">
           <span class="jc-btn-name">STICK</span>
           <span class="jc-assigned" data-target="buttons:stick_press"></span>
         </button>
-
         <div class="jc-dpad">
-          <button class="jc-btn jc-dpad-up" data-section="buttons" data-slot="dpad_up" title="十字キー上">
-            <span class="jc-btn-name">▲</span>
-            <span class="jc-assigned" data-target="buttons:dpad_up"></span>
-          </button>
-          <button class="jc-btn jc-dpad-left" data-section="buttons" data-slot="dpad_left" title="十字キー左">
-            <span class="jc-btn-name">◀</span>
-            <span class="jc-assigned" data-target="buttons:dpad_left"></span>
-          </button>
-          <button class="jc-btn jc-dpad-right" data-section="buttons" data-slot="dpad_right" title="十字キー右">
-            <span class="jc-btn-name">▶</span>
-            <span class="jc-assigned" data-target="buttons:dpad_right"></span>
-          </button>
-          <button class="jc-btn jc-dpad-down" data-section="buttons" data-slot="dpad_down" title="十字キー下">
-            <span class="jc-btn-name">▼</span>
-            <span class="jc-assigned" data-target="buttons:dpad_down"></span>
-          </button>
+        <button class="jc-btn jc-dpad-up" data-section="buttons" data-slot="dpad_up" title="十字キー上">
+          <span class="jc-btn-name">▲</span>
+          <span class="jc-assigned" data-target="buttons:dpad_up"></span>
+        </button>
+        <button class="jc-btn jc-dpad-left" data-section="buttons" data-slot="dpad_left" title="十字キー左">
+          <span class="jc-btn-name">◀</span>
+          <span class="jc-assigned" data-target="buttons:dpad_left"></span>
+        </button>
+        <button class="jc-btn jc-dpad-right" data-section="buttons" data-slot="dpad_right" title="十字キー右">
+          <span class="jc-btn-name">▶</span>
+          <span class="jc-assigned" data-target="buttons:dpad_right"></span>
+        </button>
+        <button class="jc-btn jc-dpad-down" data-section="buttons" data-slot="dpad_down" title="十字キー下">
+          <span class="jc-btn-name">▼</span>
+          <span class="jc-assigned" data-target="buttons:dpad_down"></span>
+        </button>
         </div>
-
         <button class="jc-btn jc-capture" data-section="buttons" data-slot="capture" title="キャプチャ">
-          <span class="jc-btn-name">CAPTURE</span>
+          <span class="jc-btn-name"></span>
           <span class="jc-assigned" data-target="buttons:capture"></span>
         </button>
+        <button class="jc-btn jc-sl" data-section="buttons" data-slot="SL" title="SL（側面 上）">
+          <span class="jc-btn-name">SL</span>
+          <span class="jc-assigned" data-target="buttons:SL"></span>
+        </button>
+        <button class="jc-btn jc-sr" data-section="buttons" data-slot="SR" title="SR（側面 下）">
+          <span class="jc-btn-name">SR</span>
+          <span class="jc-assigned" data-target="buttons:SR"></span>
+        </button>
+        </div>
       </div>
     </section>
 
     <section class="panel ring-panel">
-      <h2>オキニリング設定</h2>
+      <h2>スティック+ZL</h2>
       <p class="ring-desc">ZLをホールドしながらスティックを倒した方向に、独立したショートカットを割り当てます。</p>
       <div class="ring-compass">
         <div class="ring-center">ZL<br>ホールド</div>

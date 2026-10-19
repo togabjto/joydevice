@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimal Joy-Con Poster Art</title>
+  <style>
+    /* -------------------------------------------
+       基本リセット & ページベース
+    ------------------------------------------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: #e5e4de; /* 周囲のプレビュー用背景 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Arial", sans-serif;
+      padding: 40px 20px;
+    }
+
+    /* -------------------------------------------
+       ポスター下半分（画面50%・留白を基調としたキャンバス）
+    ------------------------------------------- */
+    .poster-lower-half {
+      width: 100%;
+      max-width: 480px;
+      aspect-ratio: 3 / 4; /* ポスター全体の半分として扱いやすい縦長プロポーション */
+      background-color: #f7f6f1; /* 上品で温かみのある展示会用ウォームホワイト */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 50px 30px 40px;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+    }
+
+    /* -------------------------------------------
+       中央：幾何学グラフィック & 製図ガイドライン
+    ------------------------------------------- */
+    .diagram-area {
+      position: relative;
+      width: 240px;
+      height: 240px;
+      margin: auto 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* 建築図面風の極細ヘアライン（補助線・十字軸） */
+    .axis-v {
+      position: absolute;
+      top: -30px;
+      bottom: -30px;
+      left: 50%;
+      width: 1px;
+      background-color: rgba(0, 0, 0, 0.12);
+      transform: translateX(-50%);
+    }
+
+    .axis-h {
+      position: absolute;
+      top: 50%;
+      left: -30px;
+      right: -30px;
+      height: 1px;
+      background-color: rgba(0, 0, 0, 0.12);
+      transform: translateY(-50%);
+    }
+
+    /* 引き出し線（アクセントの極細斜め線） */
+    .accent-tick-tl {
+      position: absolute;
+      top: 20px;
+      left: -24px;
+      width: 45px;
+      height: 1px;
+      background-color: rgba(0, 0, 0, 0.18);
+      transform: rotate(-45deg);
+      transform-origin: left center;
+    }
+
+    .accent-tick-tl::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: -2px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: rgba(0, 0, 0, 0.25);
+    }
+
+    /* Joy-Con ペアのコンテナ */
+    .joycon-pair {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      gap: 16px;
+      background-color: transparent;
+    }
+
+    /* -------------------------------------------
+       Joy-Con 共通ベース（フラットな線画とブロック面）
+    ------------------------------------------- */
+    .joycon {
+      width: 66px;
+      height: 154px;
+      position: relative;
+      border: 1.5px solid #222222;
+      overflow: hidden;
+      background-color: #ffffff;
+    }
+
+    /* 左 Joy-Con（ネオンブルー） */
+    .joycon.left {
+      overflow: visible; /* 側面ボタンを外側にはみ出させるため */
+      border-radius: 34px 0 0 34px;
+      background: linear-gradient(to right, #00bceb 0%, #00bceb 80%, #2b2b2b 80%, #2b2b2b 100%);
+    }
+
+    /* 右 Joy-Con（ネオンレッド） */
+    .joycon.right {
+      border-radius: 0 34px 34px 0;
+      background: linear-gradient(to right, #2b2b2b 0%, #2b2b2b 20%, #ff4233 20%, #ff4233 100%);
+    }
+
+    /* -------------------------------------------
+       左コントローラーの内部要素
+    ------------------------------------------- */
+    /* アナログスティック */
+    .left .stick {
+      position: absolute;
+      top: 26px;
+      left: 12px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background-color: #1e1e1e;
+    }
+
+    /* マイナスボタン */
+    .left .minus-btn {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      width: 10px;
+      height: 2.5px;
+      background-color: #1e1e1e;
+    }
+
+    /* 方向キー（菱形配置の幾何学ドット） */
+    .left .d-pad {
+      position: absolute;
+      top: 74px;
+      left: 14px;
+      width: 24px;
+      height: 24px;
+    }
+
+    .d-dot {
+      position: absolute;
+      width: 6.5px;
+      height: 6.5px;
+      border-radius: 50%;
+      background-color: #1e1e1e;
+    }
+    .d-dot.up    { top: 0; left: 8.5px; }
+    .d-dot.down  { bottom: 0; left: 8.5px; }
+    .d-dot.left  { top: 8.5px; left: 0; }
+    .d-dot.right { top: 8.5px; right: 0; }
+
+    /* 側面ボタン（SL / SR：右側面に突き出す2つの小さなボタン） */
+    .left .side-btn {
+      position: absolute;
+      right: -7px;
+      width: 6px;
+      height: 18px;
+      border-radius: 0 3px 3px 0;
+      background-color: #2b2b2b;
+    }
+    .left .side-btn.upper { top: 34px; }
+    .left .side-btn.lower { top: 96px; }
+
+    /* キャプチャボタン */
+    .left .capture-btn {
+      position: absolute;
+      bottom: 24px;
+      right: 18px;
+      width: 7px;
+      height: 7px;
+      background-color: #1e1e1e;
+    }
+
+    /* -------------------------------------------
+       右コントローラーの内部要素
+    ------------------------------------------- */
+    /* プラスボタン */
+    .right .plus-btn {
+      position: absolute;
+      top: 12px;
+      left: 20px;
+      width: 10px;
+      height: 10px;
+    }
+    .right .plus-btn::before,
+    .right .plus-btn::after {
+      content: "";
+      position: absolute;
+      background-color: #1e1e1e;
+    }
+    .right .plus-btn::before {
+      top: 4px;
+      left: 0;
+      width: 10px;
+      height: 2.5px;
+    }
+    .right .plus-btn::after {
+      top: 0;
+      left: 4px;
+      width: 2.5px;
+      height: 10px;
+    }
+
+    /* ABXY ボタン（4つのドット） */
+    .right .abxy {
+      position: absolute;
+      top: 26px;
+      right: 14px;
+      width: 24px;
+      height: 24px;
+    }
+    .abxy-dot {
+      position: absolute;
+      width: 6.5px;
+      height: 6.5px;
+      border-radius: 50%;
+      background-color: #1e1e1e;
+    }
+    .abxy-dot.x { top: 0; left: 8.5px; }
+    .abxy-dot.b { bottom: 0; left: 8.5px; }
+    .abxy-dot.y { top: 8.5px; left: 0; }
+    .abxy-dot.a { top: 8.5px; right: 0; }
+
+    /* アナログスティック */
+    .right .stick {
+      position: absolute;
+      top: 74px;
+      left: 26px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background-color: #1e1e1e;
+    }
+
+    /* ホームボタン */
+    .right .home-btn {
+      position: absolute;
+      bottom: 24px;
+      left: 22px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      border: 1.5px solid #1e1e1e;
+      background-color: transparent;
+    }
+
+    /* -------------------------------------------
+       タイポグラフィ（国際美術展・建築ポスター仕様）
+    ------------------------------------------- */
+    .meta-center {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .main-title {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      color: #1a1a1a;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .sub-title {
+      font-size: 8.5px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      color: #555555;
+      text-transform: uppercase;
+    }
+
+    /* フッタークレジット */
+    .footer-credits {
+      width: 100%;
+      text-align: center;
+      padding-top: 15px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .footer-credits p {
+      font-size: 7.5px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: #777777;
+      text-transform: uppercase;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ポスター下半分エリア -->
+  <section class="poster-lower-half">
+
+    <!-- 中央の幾何学・設計図風アートワーク -->
+    <div class="diagram-area">
+      <!-- 補助ガイドライン（十字線・引き出し線） -->
+      <div class="axis-v"></div>
+      <div class="axis-h"></div>
+      <div class="accent-tick-tl"></div>
+
+      <!-- Joy-Con ペア -->
+      <div class="joycon-pair">
+        <!-- 左 (Neon Blue) -->
+        <div class="joycon left">
+          <div class="minus-btn"></div>
+          <div class="stick"></div>
+          <div class="d-pad">
+            <div class="d-dot up"></div>
+            <div class="d-dot left"></div>
+            <div class="d-dot right"></div>
+            <div class="d-dot down"></div>
+          </div>
+          <div class="capture-btn"></div>
+          <div class="side-btn upper"></div>
+          <div class="side-btn lower"></div>
+        </div>
+
+        <!-- 右 (Neon Red) -->
+        <div class="joycon right">
+          <div class="plus-btn"></div>
+          <div class="abxy">
+            <div class="abxy-dot x"></div>
+            <div class="abxy-dot y"></div>
+            <div class="abxy-dot a"></div>
+            <div class="abxy-dot b"></div>
+          </div>
+          <div class="stick"></div>
+          <div class="home-btn"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 中段：作品名・コンセプト -->
+    <div class="meta-center">
+      <h2 class="main-title">JOY-CON</h2>
+      <p class="sub-title">A MODULAR CONTROL SYSTEM / EST. 2017</p>
+    </div>
+
+    <!-- 最下部：エキシビションクレジット -->
+    <footer class="footer-credits">
+      <p>MINIMAL ARCHIVE SERIES / ART &amp; GAMING</p>
+      <p>CONCEPT FOR INTERNATIONAL DESIGN EXHIBITION / 2024</p>
+    </footer>
+
+  </section>
+
+</body>
+</html>

@@ -3,8 +3,7 @@
     "L": {
       "label": "コピー",
       "keys": [
-        "cmd",
-        "c"
+        "enter"
       ],
       "text": ""
     },
@@ -13,6 +12,23 @@
       "keys": [
         "cmd",
         "v"
+      ],
+      "text": ""
+    },
+    "SL": {
+      "label": "",
+      "keys": [
+        "cmd",
+        "shift",
+        "tab"
+      ],
+      "text": ""
+    },
+    "SR": {
+      "label": "",
+      "keys": [
+        "cmd",
+        "tab"
       ],
       "text": ""
     },
@@ -58,17 +74,14 @@
     "dpad_left": {
       "label": "前のトラック",
       "keys": [
-        "cmd",
-        "z"
+        "left"
       ],
       "text": ""
     },
     "dpad_right": {
       "label": "次のトラック",
       "keys": [
-        "cmd",
-        "shift",
-        "z"
+        "right"
       ],
       "text": ""
     }
@@ -77,7 +90,7 @@
     "up": {
       "label": "上スマ",
       "keys": [],
-      "text": "あいうえおか聞くケオ"
+      "text": "さっきのバグはどういう理由？どうやって解決したの？\n\n"
     },
     "up_right": {
       "label": "",
@@ -87,7 +100,7 @@
     "right": {
       "label": "",
       "keys": [],
-      "text": "逆"
+      "text": "100文字以内で現在の進捗を報告して\n\n"
     },
     "down_right": {
       "label": "",
@@ -116,7 +129,7 @@
         "shift",
         "3"
       ],
-      "text": ""
+      "text": "これまでの進捗をMd言語ファイルでまとめて\n"
     },
     "up_left": {
       "label": "",

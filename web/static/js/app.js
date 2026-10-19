@@ -70,6 +70,8 @@
     document.querySelectorAll("[data-target]").forEach((el) => {
       const [section, slot] = el.dataset.target.split(":");
       const action = (settings[section] && settings[section][slot]) || { keys: [], text: "" };
+      const btn = el.closest(".jc-btn");
+      if (btn) btn.classList.toggle("assigned", !!(action.text || (action.keys && action.keys.length)));
       if (action.text) {
         el.textContent = "貼付: " + (action.text.length > 20 ? action.text.slice(0, 20) + "…" : action.text);
       } else if (action.keys && action.keys.length) {

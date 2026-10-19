@@ -20,6 +20,8 @@ JOYCON_MAP_PATH = CONFIG_DIR / "joycon_map.json"
 BUTTON_SLOTS: list[str] = [
     "L",
     "ZL",
+    "SL",
+    "SR",
     "minus",
     "capture",
     "stick_press",
@@ -47,6 +49,8 @@ EMPTY_ACTION: dict[str, Any] = {"label": "", "keys": [], "text": ""}
 DISPLAY_NAMES: dict[str, str] = {
     "L": "L",
     "ZL": "ZL（タップ時）",
+    "SL": "SL",
+    "SR": "SR",
     "minus": "マイナス (-)",
     "capture": "キャプチャ",
     "stick_press": "スティック押し込み",

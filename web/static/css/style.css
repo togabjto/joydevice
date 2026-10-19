@@ -45,38 +45,7 @@ body {
 
 .panel h2 { margin-top: 0; font-size: 1.1rem; }
 
-/* ---- Joy-Con visual ---- */
-.joycon-body {
-  position: relative;
-  width: 260px;
-  height: 540px;
-  margin: 16px auto 0;
-  background: linear-gradient(180deg, var(--joycon-blue), var(--joycon-blue-dark));
-  border-radius: 90px 90px 40px 40px;
-  box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.08);
-}
-
-.jc-btn {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  background: var(--btn);
-  color: var(--text);
-  border: 2px solid var(--btn-border);
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 0.7rem;
-  padding: 4px;
-  transition: transform 0.1s ease, border-color 0.15s ease;
-}
-
-.jc-btn:hover { border-color: var(--accent); transform: translateY(-1px); }
-
-.jc-btn-name { font-weight: 600; letter-spacing: 0.05em; }
-
+/* 割り当て内容の表示（オキニリング側で使用。Joy-Con側は下でツールチップ化） */
 .jc-assigned {
   display: block;
   font-size: 0.6rem;
@@ -87,42 +56,166 @@ body {
   white-space: nowrap;
 }
 
-.jc-zl {
-  top: 14px; left: 50%; transform: translateX(-50%);
-  width: 160px; height: 30px; border-radius: 16px 16px 4px 4px;
+/* ---- Joy-Con visual (ミニマル線画スタイル / 左Joy-Con) ---- */
+.joycon-body {
+  --s: 4px; /* 1u = 4px。全寸法をこの単位の倍数で指定している */
+  --ink: #1e1e1e;
+  --rail: #2b2b2b;
+  position: relative;
+  width: calc(66 * var(--s) + 30px);
+  margin: 16px auto 0;
+  padding: 58px 0 0; /* 上部に肩ボタン(ZL/L)の領域を確保 */
 }
-.jc-l {
-  top: 50px; left: 50%; transform: translateX(-50%);
-  width: 140px; height: 26px; border-radius: 10px;
+
+.joycon.left {
+  position: relative;
+  width: calc(66 * var(--s));
+  height: calc(154 * var(--s));
+  border: 2px solid #222222;
+  border-radius: calc(34 * var(--s)) 0 0 calc(34 * var(--s));
+  background: linear-gradient(to right, #00bceb 0%, #00bceb 80%, #2b2b2b 80%, #2b2b2b 100%);
 }
+
+.jc-btn {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 0;
+  background: var(--ink);
+  color: #f2f2f2;
+  border: 2px solid transparent;
+  cursor: pointer;
+  font-size: 0.65rem;
+  font-family: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.jc-btn:hover,
+.jc-btn:focus-visible { border-color: var(--accent); outline: none; }
+
+/* 割り当て済みボタンは黄色い縁で示す */
+.jc-btn.assigned { box-shadow: 0 0 0 2px var(--accent); }
+
+.jc-btn-name { font-weight: 600; letter-spacing: 0.05em; line-height: 1; }
+
+/* 割り当て内容: 小さいボタンはホバー時のツールチップで表示 */
+.joycon-body .jc-assigned {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: var(--panel);
+  border: 1px solid var(--btn-border);
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.joycon-body .jc-btn:hover .jc-assigned,
+.joycon-body .jc-btn:focus-visible .jc-assigned { display: block; }
+
+/* ZL / L: 本体の上に並ぶ肩ボタン */
+.jc-zl, .jc-l {
+  left: 0;
+  width: calc(46 * var(--s));
+  background: var(--rail);
+}
+.jc-zl { top: 0;    height: calc(6 * var(--s)); border-radius: calc(6 * var(--s)) calc(6 * var(--s)) 2px 2px; }
+.jc-l  { top: calc(6 * var(--s) + 4px); height: calc(6 * var(--s)); border-radius: 2px; }
+.jc-zl, .jc-l { margin-left: calc(10 * var(--s)); }
+
+/* マイナス: 見た目は細い棒、クリック範囲は広めに確保 */
 .jc-minus {
-  top: 92px; right: 26px;
-  width: 44px; height: 30px; border-radius: 50%;
+  top: calc(6 * var(--s));
+  right: calc(12 * var(--s));
+  width: calc(22 * var(--s));
+  height: calc(14 * var(--s));
+  background: transparent;
+}
+.jc-minus::before {
+  content: "";
+  width: calc(10 * var(--s));
+  height: calc(2.5 * var(--s));
+  background: var(--ink);
 }
 
 .jc-stick {
-  top: 150px; left: 50%; transform: translateX(-50%);
-  width: 90px; height: 90px; border-radius: 50%;
-  border-width: 4px;
+  top: calc(26 * var(--s));
+  left: calc(12 * var(--s));
+  width: calc(26 * var(--s));
+  height: calc(26 * var(--s));
+  border-radius: 50%;
 }
-.jc-stick:hover { transform: translateX(-50%) translateY(-1px); }
+.joycon-body .jc-stick .jc-assigned {
+  display: block;
+  position: static;
+  transform: none;
+  padding: 0;
+  border: none;
+  background: none;
+  max-width: calc(22 * var(--s));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.6rem;
+}
 
+/* 十字キー: 4つのドット */
 .jc-dpad {
   position: absolute;
-  top: 270px; left: 50%; transform: translateX(-50%);
-  width: 150px; height: 150px;
+  top: calc(66 * var(--s));
+  left: calc(6 * var(--s));
+  width: calc(40 * var(--s));
+  height: calc(40 * var(--s));
+  --dot: calc(13 * var(--s)); /* ドットの大きさ */
+  --reach: calc(13.5 * var(--s)); /* 枠の中心から各ドットの中心までの距離（小さいほど中心に寄る） */
 }
 .jc-dpad .jc-btn {
-  width: 48px; height: 48px; border-radius: 10px;
+  width: var(--dot);
+  height: var(--dot);
+  border-radius: 50%;
+  font-size: 0.6rem;
 }
-.jc-dpad-up    { top: 0;    left: 51px; }
-.jc-dpad-left  { top: 51px; left: 0; }
-.jc-dpad-right { top: 51px; left: 102px; }
-.jc-dpad-down  { top: 102px; left: 51px; }
+.jc-dpad-up    { top: calc(50% - var(--reach) - var(--dot) / 2); left: calc(50% - var(--dot) / 2); }
+.jc-dpad-down  { top: calc(50% + var(--reach) - var(--dot) / 2); left: calc(50% - var(--dot) / 2); }
+.jc-dpad-left  { top: calc(50% - var(--dot) / 2); left: calc(50% - var(--reach) - var(--dot) / 2); }
+.jc-dpad-right { top: calc(50% - var(--dot) / 2); left: calc(50% + var(--reach) - var(--dot) / 2); }
 
 .jc-capture {
-  top: 445px; left: 50%; transform: translateX(-50%);
-  width: 64px; height: 56px; border-radius: 12px;
+  bottom: calc(24 * var(--s));
+  right: calc(18 * var(--s));
+  width: calc(7 * var(--s));
+  height: calc(7 * var(--s));
+  border-radius: 0;
+}
+
+/* SL / SR: 右側面に突き出す2つのボタン */
+.jc-sl, .jc-sr {
+  right: calc(-6 * var(--s) - 2px);
+  width: calc(6 * var(--s));
+  height: calc(18 * var(--s));
+  border-radius: 0 calc(3 * var(--s)) calc(3 * var(--s)) 0;
+  background: var(--rail);
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-size: 0.55rem;
+}
+.jc-sl { top: calc(34 * var(--s)); }
+.jc-sr { top: calc(96 * var(--s)); }
+.joycon-body .jc-sl .jc-assigned, .joycon-body .jc-sr .jc-assigned {
+  writing-mode: horizontal-tb;
+  bottom: auto;
+  left: auto;
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 /* ---- Oshi-ring compass ---- */

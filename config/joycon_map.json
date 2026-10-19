@@ -16,6 +16,14 @@
       "kind": "button",
       "index": 19
     },
+    "SL": {
+      "kind": "button",
+      "index": 9
+    },
+    "SR": {
+      "kind": "button",
+      "index": 10
+    },
     "minus": {
       "kind": "button",
       "index": 6

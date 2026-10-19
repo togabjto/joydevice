@@ -111,6 +111,8 @@ def main() -> None:
 
     hw_map["buttons"]["L"] = record_digital(joystick, "L ボタン")
     hw_map["buttons"]["ZL"] = record_digital(joystick, "ZL ボタン")
+    hw_map["buttons"]["SL"] = record_digital(joystick, "SL ボタン")
+    hw_map["buttons"]["SR"] = record_digital(joystick, "SR ボタン")
     hw_map["buttons"]["minus"] = record_digital(joystick, "－ (マイナス) ボタン")
     hw_map["buttons"]["capture"] = record_digital(joystick, "キャプチャ ボタン")
     hw_map["buttons"]["stick_press"] = record_digital(joystick, "スティック押し込み")
